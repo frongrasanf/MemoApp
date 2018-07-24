@@ -10,7 +10,8 @@
     "react/jsx-filename-extension": 0,
     "no-use-before-define": 0,
     "react/prop-types": 0,
-    "key-spacing": 0
+    "key-spacing": 0,
+    "react/jsx-no-bind":0
   },
   "parser":"babel-eslint"
 }
