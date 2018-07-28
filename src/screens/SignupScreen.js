@@ -9,11 +9,11 @@ class SignupScreen extends React.Component {
   }
   handleSubmit() {
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then((user) => {
+      .then(() => {
         this.props.navigation.navigate('Home');
       })
       .catch((error) => {
-        console.log('error')
+        console.log(error);
       });
   }
   render() {
