@@ -11,7 +11,6 @@ class MemoListScreen extends React.Component {
   }
 
   componentWillMount() {
-    console.log('will mount');
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
     db.collection(`users/${currentUser.uid}/memos`)
@@ -19,7 +18,7 @@ class MemoListScreen extends React.Component {
       .then((snapshot) => {
         const memoList = [];
         snapshot.forEach((doc) => {
-          memoList.push(doc.data());
+          memoList.push({ ...doc.data(), key: doc.id });
         })
         this.setState({ memoList });
       })
