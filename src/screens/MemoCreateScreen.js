@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import firebase from 'firebase';
+import { db } from '../../App';
 
 import CircleButton from '../elements/CircleButton';
 
@@ -11,7 +12,6 @@ class MemoCreateScreen extends React.Component {
   }
 
   handlePress() {
-    const db = firebase.firestore();
     const { currentUser } = firebase.auth();
     db.collection(`users/${currentUser.uid}/memos`).add({
       body: this.state.body2,
@@ -32,7 +32,7 @@ class MemoCreateScreen extends React.Component {
           style={styles.memoEditInput}
           multiline
           value={this.state.body}
-          onChangeText={(text) => { this.setState({ body: text }); }}
+          onChangeText={(text) => { this.setState({ body2: text }); }}
           textAlignVertical="top"
         />
         <CircleButton onPress={this.handlePress.bind(this)}>

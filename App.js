@@ -1,4 +1,4 @@
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 import { Platform } from 'react-native';
 
@@ -24,8 +24,15 @@ const config = {
 };
 
 firebase.initializeApp(config);
+// firebase.firestore.setLogLevel('debug');
 
-const App = StackNavigator({
+const db = firebase.firestore();
+db.settings({
+  timestampsInSnapshots: true,
+});
+export { db };
+
+const App = createStackNavigator({
   Login:      { screen: LoginScreen },
   Signup:     { screen: SignupScreen },
   Home:       { screen: MemoListScreen },

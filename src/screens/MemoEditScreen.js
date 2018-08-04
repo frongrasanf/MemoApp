@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
 import firebase from 'firebase';
+import { db } from '../../App';
 
 import CircleButton from '../elements/CircleButton';
 
@@ -13,18 +14,19 @@ class MemoEditScreen extends React.Component {
 
   componentWillMount() {
     const { params } = this.props.navigation.state;
+
     this.setState({
       body: params.body,
-      body2: params.body2,
+      body2: params.body,
       key: params.key,
     });
   }
 
   handlePress() {
     const { currentUser } = firebase.auth();
-    const db = firebase.firestore();
     const newDate = new Date();
-    db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key)
+    const docRef = db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key);
+    docRef
       .update({
         body: this.state.body2,
         createdOn: newDate,
@@ -49,7 +51,7 @@ class MemoEditScreen extends React.Component {
         <TextInput
           style={styles.memoEditInput}
           multiline
-          value={this.state.body}
+          value={this.state.body2}
           onChangeText={(text) => { this.setState({ body2: text }); }}
           underlineColorAndroid="transparent"
           textAlignVertical="top"
