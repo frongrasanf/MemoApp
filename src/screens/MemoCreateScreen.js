@@ -7,16 +7,18 @@ import CircleButton from '../elements/CircleButton';
 class MemoCreateScreen extends React.Component {
   state = {
     body: '',
+    body2: '',
   }
 
   handlePress() {
     const db = firebase.firestore();
     const { currentUser } = firebase.auth();
     db.collection(`users/${currentUser.uid}/memos`).add({
-      body: this.state.body,
+      body: this.state.body2,
       createdOn: new Date(),
     })
       .then(() => {
+        this.setState({ body: this.state.body2 });
         this.props.navigation.goBack();
       })
       .catch(() => {

@@ -15,6 +15,7 @@ class MemoEditScreen extends React.Component {
     const { params } = this.props.navigation.state;
     this.setState({
       body: params.body,
+      body2: params.body2,
       key: params.key,
     });
   }
@@ -25,10 +26,11 @@ class MemoEditScreen extends React.Component {
     const newDate = new Date();
     db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key)
       .update({
-        body: this.state.body,
+        body: this.state.body2,
         createdOn: newDate,
       })
       .then(() => {
+        this.setState({ body: this.state.body2 });
         const { navigation } = this.props;
         navigation.state.params.returnMemo({
           body: this.state.body,
@@ -48,7 +50,7 @@ class MemoEditScreen extends React.Component {
           style={styles.memoEditInput}
           multiline
           value={this.state.body}
-          onChangeText={(text) => { this.setState({ body: text }); }}
+          onChangeText={(text) => { this.setState({ body2: text }); }}
           underlineColorAndroid="transparent"
           textAlignVertical="top"
         />
